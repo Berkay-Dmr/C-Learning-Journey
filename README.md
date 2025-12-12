@@ -23,3 +23,5 @@ Temel bilgisayar bilimleri kavramlarını pekiştirmek için yazdığım kodlar:
 Bu kodları kendi bilgisayarınızda denemek isterseniz, herhangi bir C derleyicisi (GCC gibi) kullanabilirsiniz:
 
 ```bash
+gcc dosya_adi.c -o uygulama
+./uygulama
