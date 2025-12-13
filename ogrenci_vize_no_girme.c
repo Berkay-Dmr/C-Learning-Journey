@@ -1,31 +1,38 @@
 #include <stdio.h>
-#include  <stdlib.h>
-typedef struct {
-    int ogrno;
-    int vizenotu;
-} ogrenci;
-    int main (void) {
-        int kisi;
-        ogrenci ogr1;
-        printf("ogrenci sayisini giriniz:");
-        scanf("%d" , &kisi);
-         ogrenci *dizi = (ogrenci*) malloc (kisi*sizeof (ogrenci));
-        if (dizi == NULL) {
-            printf("malloc error");
-        }
-        printf("%d tane ogrenci vize notu giriniz \n", kisi);
-        for (int i = 0 ; i < kisi; i++) {
-            printf("%d ogrencini no sunu giriniz :" , i+1);
-            scanf("%d" , &dizi[i].ogrno);
+#include <stdlib.h>
+   typedef struct  {
+        char name[20];
+        int vize ;
+        int final;
+    }ogrenci;
 
-            printf("%d . ogrencinin vize notunu giriniz:", i+1);
-            scanf("%d" , &dizi[i].vizenotu);
-        }
-        printf("---------- SONUCLAR----------\n");
-        for (int i = 0 ; i < kisi; i++) {
-             printf("%d . ogrencinin no su = %-10d  " , i+1, dizi[i].ogrno);
-            printf("%d . ogrencinin notu = %-10d \n"  , i+1, dizi[i].vizenotu);
-        }
-        free(dizi);
-        return 0;
+int main(void) {
+    FILE *belge;
+    int i;
+    int kisi;
+    belge = fopen("notlar.txt" , "a");
+    if ( belge == NULL ) {
+        printf("Error opening file");
+        exit(1);
     }
+    printf("kisi sayisini giriniz");
+    scanf("%d",&kisi);
+    ogrenci *dizi = (ogrenci*) malloc(kisi*sizeof(ogrenci));
+    for (i = 0 ; i<kisi; i++) {
+        printf("ogrenci adini giriniz ");
+        scanf("%s" , dizi[i].name);
+
+        printf("ogrenci vize giriniz ");
+        scanf("%d" , &dizi[i].vize);
+
+        printf("ogrenci final giriniz ");
+        scanf("%d" , &dizi[i].final);
+    }
+    for (i = 0 ; i<kisi; i++) {
+        fprintf(belge , "%-10s // %-10d // %-10d \n" , dizi[i].name , dizi[i].vize ,  dizi[i].final );
+    }
+    fclose(belge);
+    free(dizi);
+    printf("belge basarıyla olusturuldu");
+    return 0;
+}
