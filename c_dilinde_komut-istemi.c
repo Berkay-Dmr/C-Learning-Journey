@@ -36,7 +36,7 @@ int main(void) {
   while (1) {
       printf("BerkayOS > ");
       fgets(satir, sizeof(satir), stdin);
-      strtok(satir,"\n");
+      satir[strcspn(satir, "\n")] = '\0';
       komut *yeni_islem = malloc(sizeof(komut));
       yeni_islem->argumanlar = malloc(10*sizeof(char*));
       yeni_islem->arguman_sayisi = 0;
@@ -71,7 +71,7 @@ int main(void) {
             printf("\n");
       }
          else if (strcmp(yeni_islem-> komut_adi, "temizle") == 0 ) {
-              system("cls\n");
+              system("cls");
           }
       else if (strcmp(yeni_islem-> komut_adi, "dosya_olustur") == 0 ) {
           if (yeni_islem-> arguman_sayisi < 1) {
@@ -111,7 +111,12 @@ int main(void) {
                 for (int i = 0; i < 5; i++) {
                     if (disk[i].dolu_mu == 1 ) {
                         if (strcmp (yeni_islem-> argumanlar[0] ,disk[i].isim ) == 0) {
-                            strcpy(disk[i].icerik , yeni_islem -> argumanlar[1]);
+                            disk[i].icerik[0] = '\0';
+                            for (int j = 0; j < yeni_islem-> arguman_sayisi; j++) {
+                                strcat(disk[i].icerik , yeni_islem-> argumanlar[j]);
+                                if (j <yeni_islem -> arguman_sayisi - 1)
+                                    strcat(disk[i].icerik , " ");
+                            }
                             bulundu = 1;
                             break;
                         }
