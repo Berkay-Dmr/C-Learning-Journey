@@ -1,32 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
-    struct ogrenci {
+   typedef struct  {
         char name[20];
         int vize ;
         int final;
-    };
+    }ogrenci;
 
-    int main(void) {
-        FILE *belge;
-        int i;
-        belge = fopen("notlar.txt" , "a");
-        if ( belge == NULL ) {
-            printf("Error opening file");
-        }
-        struct ogrenci sinif [3]=  {};
-            for (i = 0 ; i<3 ; i++) {
-                printf("ogrenci adini giriniz ");
-                scanf("%s" , sinif[i].name);
-
-                printf("ogrenci vize giriniz ");
-                scanf("%d" , &sinif[i].vize);
-
-                printf("ogrenci final giriniz ");
-                scanf("%d" , &sinif[i].final);
-            }
-        for (i = 0 ; i<3 ; i++) {
-            fprintf(belge , "%-10s // %-10d // %-10d\n" , sinif[i].name , sinif[i].vize , sinif [i].final );
-        }
-        fclose(belge);
-        return 0;
+int main(void) {
+    FILE *belge;
+    int i;
+    int kisi;
+    belge = fopen("notlar.txt" , "a");
+    if ( belge == NULL ) {
+        printf("Error opening file");
+        exit(1);
     }
+    printf("kisi sayisini giriniz");
+    scanf("%d",&kisi);
+    ogrenci *dizi = (ogrenci*) malloc(kisi*sizeof(ogrenci));
+    for (i = 0 ; i<kisi; i++) {
+        printf("ogrenci adini giriniz ");
+        scanf("%s" , dizi[i].name);
+
+        printf("ogrenci vize giriniz ");
+        scanf("%d" , &dizi[i].vize);
+
+        printf("ogrenci final giriniz ");
+        scanf("%d" , &dizi[i].final);
+    }
+    for (i = 0 ; i<kisi; i++) {
+        fprintf(belge , "%-10s // %-10d // %-10d \n" , dizi[i].name , dizi[i].vize ,  dizi[i].final );
+    }
+    fclose(belge);
+    free(dizi);
+    printf("belge basarıyla olusturuldu");
+    return 0;
+}
